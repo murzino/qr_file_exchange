@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload with QR Code</title>
+    <!-- Подключаем внешний CSS файл -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Загрузите файл</h1>
+
+        <!-- Формирование формы -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Загрузить файл</button>
+        </form>
+
+        {% if qr_code_url %}
+        <div class="qr-code-container">
+            <h2>Сканируйте QR для загрузки файла</h2>
+            <img src="{{ qr_code_url }}" alt="QR Code">
+        </div>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="error-message">
+            <p>There was an error uploading the file. Please try again.</p>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
